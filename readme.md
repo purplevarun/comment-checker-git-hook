@@ -13,19 +13,17 @@
 
 ---
 
-![WOW](./assets//wow-gif.gif)
-
----
-
 ## INSTALLATION 💪
 
 You can copy paste the below snippet in the home directory of your repository!
 
-<pre>
-curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/hook.cc > hook-creator.cc
-curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/install.sh | bash
-rm -rf hook-creator.cc
-</pre>
+    curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/hook.cc > hook-creator.cc
+    curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/install.sh | bash
+    rm -rf hook-creator.cc
+
+---
+
+<img src="./assets/wow-gif.gif" width="300px"/>
 
 ---
 
