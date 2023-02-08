@@ -26,7 +26,18 @@ string rtrim(const string &s)
 string trim(const string &s) {
     return rtrim(ltrim(s));
 }
-
+string getLastWord (string s) {
+    reverse(s.begin(),s.end());
+    string lastWord = "";
+    for (auto word:s) {
+        if (word==' ') {
+            reverse(lastWord.begin(),lastWord.end());
+            return lastWord;
+        }
+        lastWord += word;
+    }
+    return NULL;
+}
 vector<string> getFiles() {
     // generate git_status_output
     string git_status_command = "git status --untracked-files=all > ";
@@ -50,7 +61,7 @@ vector<string> getFiles() {
                                 ends_with(line,".py");
 
         if (isFileSupported) {
-            files.push_back(trim(line));
+            files.push_back(getLastWord(trim(line)));
         }
 
     }
