@@ -4,26 +4,26 @@
 #include <vector>
 using namespace std;
 
-bool ends_with(std::string const &value, std::string const &ending) {
+bool ends_with(string const &value, string const &ending) {
     if (ending.size() > value.size()) return false;
-    return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+    return equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
 
-const std::string WHITESPACE = " \n\r\t\f\v";
+const string WHITESPACE = " \n\r\t\f\v";
 
-std::string ltrim(const std::string &s)
+string ltrim(const string &s)
 {
     size_t start = s.find_first_not_of(WHITESPACE);
-    return (start == std::string::npos) ? "" : s.substr(start);
+    return (start == string::npos) ? "" : s.substr(start);
 }
 
-std::string rtrim(const std::string &s)
+string rtrim(const string &s)
 {
     size_t end = s.find_last_not_of(WHITESPACE);
-    return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+    return (end == string::npos) ? "" : s.substr(0, end + 1);
 }
 
-std::string trim(const std::string &s) {
+string trim(const string &s) {
     return rtrim(ltrim(s));
 }
 
@@ -40,13 +40,14 @@ vector<string> getFiles() {
     while (!git_status_output_file.eof()) {
         string line;
         getline(git_status_output_file, line);
-        bool isFileSupported  = ends_with(line,"java") ||
-                                ends_with(line,"js")||
-                                ends_with(line,"ts")||
-                                ends_with(line,"jsx")||
-                                ends_with(line,"tsx")||
-                                ends_with(line,"cpp")||
-                                ends_with(line,"py");
+        bool isFileSupported  = ends_with(line,".java") ||
+                                ends_with(line,".js")||
+                                ends_with(line,".ts")||
+                                ends_with(line,".jsx")||
+                                ends_with(line,".tsx")||
+                                ends_with(line,".cpp")||
+                                ends_with(line,".c")||
+                                ends_with(line,".py");
 
         if (isFileSupported) {
             files.push_back(trim(line));
@@ -57,8 +58,48 @@ vector<string> getFiles() {
     return files;
 }
 
+string getExtension (string filename) {
+    reverse(filename.begin(),filename.end());
+    string ext = "";
+    for (auto chr:filename) {
+        if (chr == '.')
+            break;
+        ext+=chr;
+    }
+    reverse(ext.begin(),ext.end());
+    return ext;
+}
+
+string getCommenter (string ext) {
+    if (ext=="java" || ext=="cpp" || ext=="c" || ext=="js" || ext=="ts" || ext=="jsx" || ext=="tsx") {
+        return "//";
+    }
+    if ( ext=="py") {
+        return "#";
+    }
+    return NULL;
+}
+
+void alert(string text) {
+    cout << text << "\n";
+}
+
 int main() {
     vector<string> files = getFiles();
-    for (string i:files)
-        cout << i << endl;
+
+    for (string file:files) {
+        ifstream fileContents(file);
+        string extension = getExtension(file);
+        string commenter = getCommenter(extension);
+        while (!fileContents.eof()) {
+            string line;
+            getline(fileContents,line);
+            if (line.find(commenter) != string::npos) {
+                alert("you have a comment in file -> "+file);
+                return -1;
+            }
+        }
+    }
+    alert("no comments found :)");
+    return 0;
 }
