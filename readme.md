@@ -6,6 +6,7 @@
 ![clean code](https://img.shields.io/badge/-git-red)
 ![clean code](https://img.shields.io/badge/-open%20source-blue)
 ![clean code](https://img.shields.io/badge/-c%2B%2B-ff69b4)
+![visitor badge](https://visitor-badge.glitch.me/badge?page_id=purplevarun.comment-checker-git-hook)
 
 ### Make sure to star ⭐️ this repository
 
@@ -20,9 +21,9 @@
 You can copy paste the below snippet in the home directory of your repository!
 
 <pre>
-    curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/hook.cc > hook-creator.cc
-    curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/install.sh | bash
-    rm -rf hook-creator.cc
+curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/hook.cc > hook-creator.cc
+curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/install.sh | bash
+rm -rf hook-creator.cc
 </pre>
 
 ---
