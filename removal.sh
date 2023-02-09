@@ -1,1 +1,1 @@
-rm -rf ./git/hooks/pre-commit
+rm -rf ./.git/hooks/pre-commit
