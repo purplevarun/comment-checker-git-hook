@@ -11,3 +11,4 @@ echo "added hook in repository"
 
 # cleanup
 rm -rf hook-creator.cc
+echo "cleaned up"
