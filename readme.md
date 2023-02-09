@@ -27,7 +27,7 @@ You can copy paste the below snippet in the home directory of your repository!
 
 ## REMOVAL 😅
 
-    curl https://raw.githubusercontent.com/purplevarun/comment-checker-git-hook/main/removal.sh | bash
+    rm -rf .git/hooks/pre-commit
 
 ---
 
