@@ -4,11 +4,6 @@
 #include <vector>
 using namespace std;
 
-bool ends_with(string const &value, string const &ending) {
-    if (ending.size() > value.size()) return false;
-    return equal(ending.rbegin(), ending.rend(), value.rbegin());
-}
-
 const string WHITESPACE = " \n\r\t\f\v";
 
 string ltrim(const string &s)
@@ -36,9 +31,10 @@ string getLastWord (string s) {
         }
         lastWord += word;
     }
-    return NULL;
+    reverse(lastWord.begin(),lastWord.end());
+    return lastWord;
 }
-vector<string> getFiles() {
+vector<string> getFiles(char* fileName) {
     // generate git_status_output
     string git_status_command = "git status --untracked-files=all > ";
     string git_status_file_name = "git_status_output";
@@ -51,19 +47,17 @@ vector<string> getFiles() {
     while (!git_status_output_file.eof()) {
         string line;
         getline(git_status_output_file, line);
-        bool isFileSupported  = ends_with(line,".java") ||
-                                ends_with(line,".js")||
-                                ends_with(line,".ts")||
-                                ends_with(line,".jsx")||
-                                ends_with(line,".tsx")||
-                                ends_with(line,".cpp")||
-                                ends_with(line,".c")||
-                                ends_with(line,".py");
-
+        bool isFileSupported  = line.ends_with(".java") ||
+                                line.ends_with(".js")||
+                                line.ends_with(".ts")||
+                                line.ends_with(".jsx")||
+                                line.ends_with(".tsx")||
+                                line.ends_with(".cpp")||
+                                line.ends_with(".c")||
+                                line.ends_with(".py");
         if (isFileSupported) {
             files.push_back(getLastWord(trim(line)));
         }
-
     }
     system("rm -rf git_status_output");
     return files;
@@ -95,9 +89,8 @@ void alert(string text) {
     cout << text << "\n";
 }
 
-int main() {
-    vector<string> files = getFiles();
-
+int main(int argc, char** argv) {
+    vector<string> files = getFiles(argv[0]);
     for (string file:files) {
         ifstream fileContents(file);
         string extension = getExtension(file);
@@ -105,7 +98,7 @@ int main() {
         while (!fileContents.eof()) {
             string line;
             getline(fileContents,line);
-            if (line.find(commenter) != string::npos) {
+            if (line.starts_with(commenter)) {
                 alert("you have a comment in file -> "+file);
                 return -1;
             }
